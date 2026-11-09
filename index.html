@@ -12,6 +12,8 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/cn.css">
+<link rel="stylesheet" href="assets/css/craft.css">
+<link rel="stylesheet" href="assets/css/claw.css">
 </head>
 <body class="cn">
 <div class="topbar"><div class="container">
@@ -42,11 +44,24 @@
       <div><strong>100万+</strong><span>件月出货量</span></div>
     </div>
   </div>
-  <div class="hero-visual">
-    <div class="hv hv-1"><img src="assets/img/hero-fox.jpg" alt="狐狸长条抱枕" fetchpriority="high"></div>
-    <div class="hv hv-2"><img src="assets/img/hero-panda.jpg" alt="软团团熊猫"></div>
-    <div class="hv hv-3"><img src="assets/img/p/baker-piggy-2.jpg" alt="烘焙猪"></div>
-    <div class="hero-badge"><div class="ic"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div><div><strong>月月上新</strong><span>原创款式 · 迭代快</span></div></div>
+  <div class="cm-wrap">
+    <div class="cm-hint"><svg class="fox" viewBox="0 0 120 110" aria-hidden="true"><path d="M24 50 L12 4 L54 32 Z" fill="#E46A3C"/><path d="M26 42 L20 14 L44 31Z" fill="#FFE3D3"/><path d="M96 50 L108 4 L66 32 Z" fill="#E46A3C"/><path d="M94 42 L100 14 L76 31Z" fill="#FFE3D3"/><ellipse cx="60" cy="64" rx="46" ry="40" fill="#E46A3C"/><ellipse cx="60" cy="64" rx="40.5" ry="34.5" fill="none" stroke="#B9481F" stroke-width="1.4" stroke-dasharray="3.5 3" opacity=".55"/><path d="M15 72 Q30 57 60 76 Q90 57 105 72 Q97 104 60 105 Q23 104 15 72Z" fill="#FFF8F1"/><circle cx="42" cy="59" r="6" fill="#2A211D"/><circle cx="78" cy="59" r="6" fill="#2A211D"/><circle cx="44.2" cy="56.8" r="2" fill="#fff"/><circle cx="80.2" cy="56.8" r="2" fill="#fff"/><ellipse cx="60" cy="76" rx="6.5" ry="4.8" fill="#2A211D"/><path d="M53.5 83 Q60 89 66.5 83" stroke="#2A211D" stroke-width="2.6" fill="none" stroke-linecap="round"/><ellipse cx="29" cy="79" rx="7.5" ry="4.5" fill="#F7A99A" opacity=".75"/><ellipse cx="91" cy="79" rx="7.5" ry="4.5" fill="#F7A99A" opacity=".75"/></svg><span class="bubble">试试手气，抓一只！</span></div>
+    <div class="claw-machine" id="claw">
+      <div class="cm-head"><div class="cm-bulbs"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="cm-title">金彤阳 · 抓娃娃</div></div>
+      <div class="cm-glass" id="cmGlass">
+        <div class="cm-rail"></div>
+        <div class="cm-claw" id="cmClaw"><div class="cm-rope"></div><div class="cm-hand"><svg viewBox="0 0 80 70" aria-hidden="true"><g class="prong l"><path d="M34 14 C20 22 13 38 19 58 C20 61 24 61 25 58 C22 44 25 31 38 22Z" fill="#AEB9C4" stroke="#7D8B98" stroke-width="1.5"/></g><g class="prong r"><path d="M46 14 C60 22 67 38 61 58 C60 61 56 61 55 58 C58 44 55 31 42 22Z" fill="#AEB9C4" stroke="#7D8B98" stroke-width="1.5"/></g><rect x="26" y="2" width="28" height="18" rx="6" fill="#8E9BA8"/><circle cx="40" cy="11" r="4" fill="#E46A3C"/></svg><div class="cm-hold" id="cmHold"></div></div></div>
+        <div class="cm-pile" id="cmPile"></div>
+        <div class="cm-chute"><span>出口</span></div>
+        <div class="cm-shine"></div>
+      </div>
+      <div class="cm-panel">
+        <button class="cm-dir" data-dir="-1" type="button" aria-label="向左移动">◀</button>
+        <button class="cm-go" id="cmGo" type="button">抓！</button>
+        <button class="cm-dir" data-dir="1" type="button" aria-label="向右移动">▶</button>
+      </div>
+      <div class="cm-base"><span>免费体验 · 抓到有惊喜</span></div>
+    </div>
   </div>
 </div></section>
 
@@ -78,6 +93,7 @@
   <div class="body"><h3>抓机娃娃</h3><p>八寸、十寸、十五寸，款多货稳</p></div></a></div>
 </div></section>
 
+<div class="seam"></div>
 <section class="section"><div class="container why">
   <div class="why-img reveal">
     <img src="assets/img/f/sewing.jpg" alt="金彤阳玩具缝纫车间" loading="lazy">
@@ -211,6 +227,7 @@
 </div></section>
 <section class="section-sm"><div class="container">
   <div class="cta reveal">
+    <div class="cta-fox"><svg class="fox" viewBox="0 0 120 110" aria-hidden="true"><path d="M24 50 L12 4 L54 32 Z" fill="#E46A3C"/><path d="M26 42 L20 14 L44 31Z" fill="#FFE3D3"/><path d="M96 50 L108 4 L66 32 Z" fill="#E46A3C"/><path d="M94 42 L100 14 L76 31Z" fill="#FFE3D3"/><ellipse cx="60" cy="64" rx="46" ry="40" fill="#E46A3C"/><ellipse cx="60" cy="64" rx="40.5" ry="34.5" fill="none" stroke="#B9481F" stroke-width="1.4" stroke-dasharray="3.5 3" opacity=".55"/><path d="M15 72 Q30 57 60 76 Q90 57 105 72 Q97 104 60 105 Q23 104 15 72Z" fill="#FFF8F1"/><circle cx="42" cy="59" r="6" fill="#2A211D"/><circle cx="78" cy="59" r="6" fill="#2A211D"/><circle cx="44.2" cy="56.8" r="2" fill="#fff"/><circle cx="80.2" cy="56.8" r="2" fill="#fff"/><ellipse cx="60" cy="76" rx="6.5" ry="4.8" fill="#2A211D"/><path d="M53.5 83 Q60 89 66.5 83" stroke="#2A211D" stroke-width="2.6" fill="none" stroke-linecap="round"/><ellipse cx="29" cy="79" rx="7.5" ry="4.5" fill="#F7A99A" opacity=".75"/><ellipse cx="91" cy="79" rx="7.5" ry="4.5" fill="#F7A99A" opacity=".75"/></svg></div>
     <div>
       <span class="eyebrow">开始合作</span>
       <h2>有款式想做？发图给我们就行。</h2>
@@ -226,6 +243,11 @@
 
 </main>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "河北金彤阳玩具有限公司", "url": "https://jintongyang.com", "telephone": "15933525222", "address": {"@type": "PostalAddress", "streetAddress": "内丘县工业园区（北园）方圆西路南侧10-12门市", "addressLocality": "邢台", "addressRegion": "河北", "addressCountry": "CN"}}</script>
+<div class="prize-modal" id="prizeModal" role="dialog" aria-modal="true" aria-label="抓娃娃结果">
+  <div class="pz-card"><div class="pz-confetti"></div><button class="pz-close" type="button" aria-label="关闭">×</button><div class="pz-body"></div></div>
+</div>
+<script>window.CLAW_PRIZES=[{"id": "football-fox", "name": "足球狐狸", "img": "assets/img/p/football-fox.jpg", "desc": "萌趣运动风，球衣可印字、印 LOGO，适合球队周边、活动礼品。", "sizes": "25/35/45/55/75cm", "cat": "signature", "catName": "原创招牌款"}, {"id": "squishy-panda", "name": "软团团 · 熊猫", "img": "assets/img/p/squishy-panda.jpg", "desc": "软团团系列，亲肤面料 + 优质弹性 PP 棉，抱感软糯。", "sizes": "60cm", "cat": "hug", "catName": "抱枕 · 软团团"}, {"id": "glow-bunny", "name": "荧光兔子", "img": "assets/img/p/glow-bunny.jpg", "desc": "内置发光灯组，夜间可当小夜灯，潮玩、礼品都适合。", "sizes": "25/30/40cm", "cat": "gift", "catName": "节日礼品玩偶"}, {"id": "leaf-penguin", "name": "四叶企鹅", "img": "assets/img/p/leaf-penguin.jpg", "desc": "叶子帽 + 小斜挎包，抓机、摆摊、礼品店都好卖。", "sizes": "8 寸", "cat": "claw", "catName": "抓机娃娃"}, {"id": "baker-piggy", "name": "烘焙猪", "img": "assets/img/p/baker-piggy.jpg", "desc": "厨师帽搭配刺绣面包围裙，四个尺寸成套，憨态可掬。", "sizes": "25/30/40/50cm", "cat": "signature", "catName": "原创招牌款"}, {"id": "cloud-cushion", "name": "云朵抱枕", "img": "assets/img/p/cloud-cushion.jpg", "desc": "云朵造型，刺绣表情和星星，可作居家靠垫、车载靠枕。", "sizes": "50×35cm", "cat": "hug", "catName": "抱枕 · 软团团"}, {"id": "sweetheart-piggies", "name": "情侣猪", "img": "assets/img/p/sweetheart-piggies.jpg", "desc": "情侣成对款，情人节、婚庆、纪念日礼品首选。", "sizes": "25/30/40/50cm", "cat": "gift", "catName": "节日礼品玩偶"}, {"id": "princess-bunny", "name": "折耳公主兔", "img": "assets/img/p/princess-bunny.jpg", "desc": "折耳兔搭配蝴蝶结和小裙子，绒毛蓬松细腻，少女心满满。", "sizes": "25/30/40/50cm", "cat": "signature", "catName": "原创招牌款"}, {"id": "elephant-family", "name": "贝雷帽小象", "img": "assets/img/p/elephant-family.jpg", "desc": "黄色贝雷帽 + 口水巾，三个尺寸可选。", "sizes": "8/10/15 寸", "cat": "claw", "catName": "抓机娃娃"}, {"id": "star-lamb", "name": "五星羊", "img": "assets/img/p/star-lamb.jpg", "desc": "卷角小羊抱着毛绒星星，满月礼、宝宝礼都合适。", "sizes": "25/30/40cm", "cat": "gift", "catName": "节日礼品玩偶"}, {"id": "squishy-kitty", "name": "软团团 · 猫咪", "img": "assets/img/p/squishy-kitty.jpg", "desc": "软团团系列人气款，治愈系配色，适合送礼与陪伴。", "sizes": "60cm", "cat": "hug", "catName": "抱枕 · 软团团"}, {"id": "birthday-monkey", "name": "生日猴子", "img": "assets/img/p/birthday-monkey.jpg", "desc": "生日帽 + 背带裤造型，生日伴手礼、派对装饰都合适。", "sizes": "25/30/40/50cm", "cat": "gift", "catName": "节日礼品玩偶"}];window.CLAW_GOLD={"gold":true,"name":"大奖"};</script>
+<script src="assets/js/claw.js" defer></script>
 <footer class="footer"><div class="container">
   <div class="f-grid">
     <div>

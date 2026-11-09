@@ -1,0 +1,71 @@
+/* ================= 缝线 · 吊牌 · 绒布 视觉语言 ================= */
+/* plush fabric texture */
+body.cn{background-color:var(--cream);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .38 0 0 0 0 .28 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.cn .bg-paper{background-color:#FFFDFB}
+.cn .bg-cream2{background-color:#FBEFE3}
+
+/* stitched inner seam on cards */
+.cn .client,.cn .cat,.cn .product,.cn .step,.cn .tl,.cn .faq details,.cn .more-box,.cn .form,.cn .license,.cn .c-card,.cn .why-img,.cn .q-img{position:relative}
+.cn .client::after,.cn .cat::after,.cn .product::after,.cn .step::after,.cn .tl::after,.cn .faq details::after,.cn .more-box::after,.cn .form::after,.cn .license::after{
+  content:"";position:absolute;inset:7px;border:1.5px dashed rgba(201,83,42,.26);border-radius:calc(var(--radius) - 6px);pointer-events:none;z-index:3;transition:border-color .3s}
+.cn .faq details::after{border-radius:calc(var(--radius-sm) - 5px);inset:6px}
+.cn .client:hover::after,.cn .cat:hover::after,.cn .product:hover::after{border-color:rgba(201,83,42,.55)}
+.cn .stats::before,.cn .cta .stitch,.cn .c-card .stitch{content:"";position:absolute;inset:9px;border:1.5px dashed rgba(255,255,255,.45);border-radius:24px;pointer-events:none}
+.cn .cta{isolation:isolate}
+.cn .cta::after{content:"";position:absolute;inset:10px;border:1.5px dashed rgba(255,255,255,.22);border-radius:28px;pointer-events:none}
+.cn .c-card::before{content:"";position:absolute;inset:8px;border:1.5px dashed rgba(255,255,255,.2);border-radius:16px;pointer-events:none}
+.cn .why-img img,.cn .q-img img{outline:1.5px dashed rgba(255,255,255,.7);outline-offset:-10px}
+
+/* woven-label eyebrow (布标) */
+.cn .eyebrow{background:#fff;border:1.5px dashed var(--fox);border-radius:7px;padding:5px 13px 5px 15px;color:var(--fox-dark);
+  box-shadow:0 3px 0 rgba(201,83,42,.12);transform:rotate(-1.2deg);display:inline-flex}
+.cn .eyebrow::before,.cn .section-head.center .eyebrow::after{display:none}
+.cn .cta .eyebrow{background:transparent;border-color:#F2A486;color:#F2A486;box-shadow:none}
+
+/* hang-tag product label (吊牌) */
+.cn .product .tag{left:16px;top:16px;border-radius:4px 6px 6px 4px;padding:5px 12px 5px 22px;background:#FFF6EC;color:var(--ink);
+  clip-path:polygon(9px 0,100% 0,100% 100%,9px 100%,0 50%);transform:rotate(-7deg);transform-origin:0 50%;font-weight:700;
+  box-shadow:none;transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+.cn .product .tag::before{content:"";position:absolute;left:9px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:rgba(42,33,29,.55)}
+.cn .product:hover .tag{transform:rotate(4deg)}
+.cn .product .meta span:first-child{border:1.2px dashed rgba(91,77,70,.35);background:transparent}
+
+/* squishy buttons */
+.cn .btn{transition:transform .35s cubic-bezier(.34,1.56,.64,1),background .2s,box-shadow .2s,color .2s}
+.cn .btn:active{transform:scale(.94,.88)}
+.cn .btn-primary{box-shadow:0 5px 0 #B9481F,0 14px 24px -12px rgba(228,106,60,.7)}
+.cn .btn-primary:active{box-shadow:0 1px 0 #B9481F}
+
+/* hand-drawn underline on hero highlight */
+.cn .hero em.hl{position:relative;white-space:nowrap}
+.cn .hero em.hl::after{content:"";position:absolute;left:0;right:6%;bottom:-.08em;height:.32em;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 20' preserveAspectRatio='none'%3E%3Cpath d='M3 14 C60 4 120 18 180 9 S270 6 297 11' fill='none' stroke='%23F2C14E' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% 100%;z-index:-1}
+
+/* fabric-strip marquee with seams */
+.cn .strip{position:relative;background:var(--fox);padding:18px 0}
+.cn .strip::before,.cn .strip::after{content:"";position:absolute;left:0;right:0;height:0;border-top:2px dashed rgba(255,255,255,.55)}
+.cn .strip::before{top:6px}.cn .strip::after{bottom:6px}
+.cn .strip-track span::after{color:#FFE08A}
+
+/* step numbers as sewn buttons */
+.cn .step::before{width:52px;height:52px;border-radius:50%;background:var(--blush);color:var(--fox-dark);display:grid !important;place-items:center;font-size:20px !important;
+  box-shadow:inset 0 0 0 4px #fff,inset 0 0 0 5.5px rgba(201,83,42,.25)}
+
+/* mascot in CTA / footer */
+.fox{display:block}
+.cta-fox{position:absolute;right:28px;top:-46px;width:96px;height:88px;z-index:2;animation:peek 3.4s ease-in-out infinite;transform-origin:50% 100%}
+.cn .cta{overflow:visible}
+.cn .cta::before{display:none}
+.f-fox{width:46px;height:42px;display:inline-block;vertical-align:middle;margin-right:8px}
+
+/* seam divider */
+.seam{height:0;border-top:2px dashed rgba(201,83,42,.22);max-width:var(--max);margin:0 auto;position:relative}
+.seam::after{content:"";position:absolute;left:50%;top:-11px;width:20px;height:20px;margin-left:-10px;border-radius:50%;background:var(--cream);
+  box-shadow:inset 0 0 0 2px rgba(201,83,42,.4);background-image:radial-gradient(circle at 35% 35%,rgba(201,83,42,.5) 1.6px,transparent 2px),radial-gradient(circle at 65% 35%,rgba(201,83,42,.5) 1.6px,transparent 2px),radial-gradient(circle at 35% 65%,rgba(201,83,42,.5) 1.6px,transparent 2px),radial-gradient(circle at 65% 65%,rgba(201,83,42,.5) 1.6px,transparent 2px)}
+
+@media (max-width:600px){
+  .cta-fox{width:72px;height:66px;top:-36px;right:18px}
+  .cn .step::before{width:44px;height:44px;font-size:17px !important}
+  .cn .product .tag{left:10px;top:12px;padding:3px 9px 3px 18px}
+}
