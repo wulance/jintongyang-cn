@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>3D 看样间 · 足球狐狸 | 金彤阳玩具</title>
+<meta name="description" content="在线 360° 查看金彤阳足球狐狸毛绒玩具，自选尺寸、球衣颜色和胸前印字，用手机 AR 放到桌上看实际大小。">
+<meta name="theme-color" content="#F4EEE6">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/catalog.css">
+<style>
+  body{background:#F4EEE6;padding-bottom:0}
+  .s-top{display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 24px;border-bottom:1px solid rgba(29,27,25,.12);background:#F4EEE6;position:relative;z-index:5}
+  .s-top a{font-size:14px;color:var(--ink-2)}
+  .s-top a:hover{color:var(--ink)}
+  .s-top b{font-size:15px;letter-spacing:.06em}
+  .stage{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(340px,1fr);min-height:calc(100vh - 56px)}
+  .viewer{position:relative;background:radial-gradient(ellipse 70% 60% at 50% 55%,#FFFBF5 0%,#F4EEE6 70%)}
+  model-viewer{width:100%;height:100%;min-height:520px;--poster-color:transparent;background:transparent;outline:none}
+  model-viewer::part(default-progress-bar){display:none}
+  .loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--mute);pointer-events:none;transition:opacity .4s}
+  .loading.hide{opacity:0}
+  .hint{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);font-size:12.5px;color:var(--mute);background:rgba(255,255,255,.7);padding:6px 14px;border-radius:999px;white-space:nowrap;pointer-events:none}
+  .hs{display:block;border:0;background:none;padding:0;cursor:default;--o:1}
+  .hs .dot{display:block;width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(212,84,42,.85),0 2px 6px rgba(0,0,0,.25)}
+  .hs .lb{position:absolute;left:18px;top:50%;transform:translateY(-50%);white-space:nowrap;font-size:12px;background:rgba(29,27,25,.82);color:#fff;padding:3px 9px;border-radius:4px;opacity:var(--o);transition:opacity .3s}
+  .hs.l .lb{left:auto;right:18px}
+  .hs[data-visible="false"]{--o:0}
+  .hs[data-visible="false"] .dot{opacity:.25}
+  .hs-size .dot{display:none}
+  model-viewer.small .hs:not(.hs-size){visibility:hidden}
+  .hs-size .lb{left:50%;top:auto;bottom:6px;transform:translateX(-50%);background:var(--accent);font-family:var(--num);font-weight:600;font-size:13px}
+
+  .panel{background:var(--white);border-left:1px solid rgba(29,27,25,.12);padding:40px 40px 32px;display:flex;flex-direction:column}
+  .panel .meta{font-size:12.5px;color:var(--mute);font-family:var(--num);letter-spacing:.04em}
+  .panel h1{font-size:34px;font-weight:700;letter-spacing:.04em;margin:6px 0 10px}
+  .panel .intro{font-size:14px;color:var(--ink-2);margin-bottom:28px}
+  .opt{padding:18px 0;border-top:1px solid var(--line)}
+  .opt h3{font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:12px;display:flex;justify-content:space-between}
+  .opt h3 span{font-weight:400;color:var(--mute)}
+  .sizes{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--ink)}
+  .sizes button{height:44px;border:0;background:#fff;font-family:var(--num);font-size:15px;cursor:pointer;color:var(--ink)}
+  .sizes button + button{border-left:1px solid var(--ink)}
+  .sizes button.on{background:var(--ink);color:#fff}
+  .sizes button small{font-size:11px;margin-left:1px}
+  .swatches{display:flex;gap:12px}
+  .swatches button{width:36px;height:36px;border-radius:50%;border:0;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);position:relative}
+  .swatches button.on::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1.5px solid var(--ink)}
+  .txt{display:flex;border:1px solid var(--line-2);background:#fff}
+  .txt input{flex:1;border:0;padding:12px;font-size:16px;font-family:inherit;outline:none;min-width:0}
+  .txt span{font-size:12px;color:var(--mute);padding:0 12px;display:flex;align-items:center;font-family:var(--num)}
+  .opt p.tip{font-size:12px;color:var(--mute);margin-top:8px}
+  .acts3{margin-top:auto;padding-top:22px;display:grid;gap:10px}
+  .acts3 .btn{height:52px;width:100%}
+  .acts3 .btn svg{width:20px;height:20px}
+  .ar-note{font-size:12px;color:var(--mute);text-align:center;margin-top:4px}
+  .wx-tip{display:none;background:#FFF4E8;border:1px solid #F0C9A8;color:#8A4A22;font-size:13px;padding:10px 12px;margin-bottom:16px}
+  .wx-tip.show{display:block}
+  .sheet{position:fixed;inset:0;background:rgba(20,18,16,.55);display:none;align-items:center;justify-content:center;z-index:120;padding:24px}
+  .sheet.open{display:flex}
+  .sheet .card{background:#fff;max-width:340px;width:100%;padding:26px 24px;border-top:3px solid var(--ink);text-align:center}
+  .sheet h3{font-size:18px;margin-bottom:8px}
+  .sheet p{font-size:14px;color:var(--ink-2);margin-bottom:18px}
+  .sheet .url{font-family:var(--num);font-size:12.5px;background:var(--paper);padding:8px;word-break:break-all;margin-bottom:14px}
+
+  @media (max-width:900px){
+    .stage{grid-template-columns:1fr;min-height:0}
+    model-viewer{height:58vh;min-height:360px}
+    .panel{border-left:0;border-top:1px solid rgba(29,27,25,.12);padding:24px 20px 28px}
+    .panel h1{font-size:26px}
+    .panel .intro{margin-bottom:16px}
+    .acts3{position:sticky;bottom:0;background:#fff;margin:0 -20px -28px;padding:12px 20px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);grid-template-columns:1.25fr 1fr}
+    .acts3 .btn{height:48px;font-size:14px;padding:0 10px}
+    .ar-note{grid-column:1/-1;margin-top:0}
+    .s-top{padding:0 16px}
+  }
+</style>
+<script type="importmap">{"imports":{"three":"./assets/vendor/three.module.min.js"}}</script>
+<script type="module" src="assets/vendor/model-viewer-module.min.js"></script>
+</head>
+<body>
+<header class="s-top">
+  <a href="index.html">← 金彤阳玩具</a>
+  <b>3D 看样间</b>
+  <a href="products.html">全部产品</a>
+</header>
+
+<main class="stage">
+  <section class="viewer">
+    <model-viewer id="mv" alt="足球狐狸 3D 模型"
+      camera-controls touch-action="pan-y" disable-tap
+      auto-rotate auto-rotate-delay="2500" rotation-per-second="16deg"
+      camera-orbit="-20deg 78deg 1.75m" camera-target="0m 0.3m 0m" field-of-view="26deg"
+      min-camera-orbit="auto 25deg 0.35m" max-camera-orbit="auto 98deg 3.2m"
+      interaction-prompt="none" interpolation-decay="120"
+      shadow-intensity="1" shadow-softness="0.85" exposure="1.0" environment-image="neutral" tone-mapping="neutral"
+      ar ar-modes="webxr quick-look" ar-scale="fixed" ar-placement="floor">
+      <button class="hs" slot="hotspot-eye" data-position="0 0 0" data-normal="0 0 1"><span class="dot"></span><span class="lb">刺绣大眼睛</span></button>
+      <button class="hs" slot="hotspot-print" data-position="0 0 0" data-normal="0 0 1"><span class="dot"></span><span class="lb">胸前可印字 / LOGO</span></button>
+      <button class="hs l" slot="hotspot-ball" data-position="0 0 0" data-normal="-0.3 0 1"><span class="dot"></span><span class="lb">毛绒足球配件</span></button>
+      <button class="hs" slot="hotspot-tail" data-position="0 0 0" data-normal="0.6 0 -1"><span class="dot"></span><span class="lb">蓬松大尾巴</span></button>
+      <div class="hs hs-size" slot="hotspot-size" data-position="0 0 0"><span class="lb" id="sizeLabel">高 45 cm</span></div>
+    </model-viewer>
+    <div class="loading" id="loading">正在生成 3D 模型…</div>
+    <div class="hint">拖动旋转 · 双指缩放</div>
+  </section>
+
+  <aside class="panel">
+    <div class="wx-tip" id="wxTip">微信里无法打开 AR。请点右上角「···」，选择「在浏览器打开」。</div>
+    <div class="meta">JTY-001 · 原创招牌款</div>
+    <h1>足球狐狸</h1>
+    <p class="intro">尺寸、球衣颜色、胸前文字都可以改。改好后点「放到桌上看」，用手机摄像头看实际大小。</p>
+
+    <div class="opt">
+      <h3>尺寸 <span>高度，含耳朵</span></h3>
+      <div class="sizes" id="sizes">
+        <button data-v="25">25<small>cm</small></button><button data-v="35">35<small>cm</small></button><button data-v="45" class="on">45<small>cm</small></button><button data-v="55">55<small>cm</small></button><button data-v="75">75<small>cm</small></button>
+      </div>
+    </div>
+    <div class="opt">
+      <h3>球衣颜色 <span id="colorName">宝蓝</span></h3>
+      <div class="swatches" id="swatches">
+        <button data-v="#2F5DB8" data-n="宝蓝" class="on" style="background:#2F5DB8" aria-label="宝蓝"></button>
+        <button data-v="#C8323A" data-n="正红" style="background:#C8323A" aria-label="正红"></button>
+        <button data-v="#2E7D57" data-n="墨绿" style="background:#2E7D57" aria-label="墨绿"></button>
+        <button data-v="#2B2B2B" data-n="黑色" style="background:#2B2B2B" aria-label="黑色"></button>
+        <button data-v="#E58FB0" data-n="粉色" style="background:#E58FB0" aria-label="粉色"></button>
+      </div>
+    </div>
+    <div class="opt">
+      <h3>胸前印字</h3>
+      <label class="txt"><input id="txt" value="TOM" maxlength="10" autocomplete="off" aria-label="胸前印字"><span id="cnt">3/10</span></label>
+      <p class="tip">可印英文、中文、球队名或公司名，正式生产可换成您的 LOGO。</p>
+    </div>
+
+    <div class="acts3">
+      <button class="btn btn-accent" id="arBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/><path d="m12 7 5 3v5l-5 3-5-3v-5z"/><path d="m7 10 5 3 5-3M12 13v5"/></svg>放到桌上看</button>
+      <button class="btn btn-line" id="askBtn" type="button">按此方案询价</button>
+      <p class="ar-note" id="arNote">AR 需用 iPhone Safari 或安卓 Chrome 打开</p>
+    </div>
+  </aside>
+</main>
+
+<div class="sheet" id="sheet"><div class="card">
+  <h3 id="sheetTitle">请用手机打开</h3>
+  <p id="sheetText">AR 需要手机摄像头。用手机浏览器打开下面的地址，就能把狐狸放到桌上看。</p>
+  <div class="url" id="sheetUrl"></div>
+  <button class="btn btn-dark" type="button" id="sheetClose" style="width:100%">知道了</button>
+</div></div>
+
+<div class="wx-modal" id="wxModal" role="dialog" aria-modal="true" aria-label="微信咨询">
+  <div class="wx-card">
+    <button class="wx-close" aria-label="关闭">×</button>
+    <h3>方案已复制</h3>
+    <p>加微信后直接粘贴发送，我们按方案报价</p>
+    <img src="assets/img/wechat-qr.jpg" alt="金彤阳玩具微信二维码">
+    <div class="wx-id"><span>微信号 <b>15933525222</b></span><button type="button" data-copy="15933525222">复制</button></div>
+  </div>
+</div>
+
+<script type="module">
+import { buildFox, exportGLB } from './assets/js/fox3d.js';
+
+const mv = document.getElementById('mv');
+const loading = document.getElementById('loading');
+const state = { size: 45, color: '#2F5DB8', colorName: '宝蓝', text: 'TOM' };
+const BASE_H = 1.1;
+const HOT = {               // unit-model coordinates
+  eye:   [0.088, 0.805, 0.215],
+  print: [0, 0.44, 0.19],
+  ball:  [-0.2, 0.27, 0.29],
+  tail:  [0.30, 0.47, -0.25],
+  size:  [0, 1.13, 0],
+};
+let busy = false, pending = false, lastUrl = null;
+
+async function rebuild() {
+  if (busy) { pending = true; return; }
+  busy = true;
+  const fox = buildFox({ jersey: state.color, text: state.text });
+  const url = await exportGLB(fox, state.size);
+  const orbit = lastUrl ? mv.getCameraOrbit() : null;
+  mv.src = url;
+  await new Promise(r => mv.addEventListener('load', r, { once: true }));
+  // keep a fixed camera distance so different sizes really look different
+  const tY = (state.size / 100) * 0.42;
+  mv.cameraTarget = `0m ${tY.toFixed(3)}m 0m`;
+  const R0 = innerWidth < 900 ? 1.3 : 1.75;
+  mv.cameraOrbit = orbit ? `${orbit.theta}rad ${orbit.phi}rad ${orbit.radius}m` : `-20deg 78deg ${R0}m`;
+  if (!orbit) mv.jumpCameraToGoal();
+  if (lastUrl) URL.revokeObjectURL(lastUrl);
+  lastUrl = url;
+  const s = state.size / 100 / BASE_H;
+  for (const [k, p] of Object.entries(HOT)) mv.updateHotspot({ name: 'hotspot-' + k, position: p.map(v => (v * s).toFixed(4)).join(' ') + '' });
+  document.getElementById('sizeLabel').textContent = `高 ${state.size} cm`;
+  mv.classList.toggle('small', state.size <= 35);
+  loading.classList.add('hide');
+  busy = false;
+  if (pending) { pending = false; rebuild(); }
+}
+
+// controls
+document.getElementById('sizes').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  document.querySelectorAll('#sizes button').forEach(x => x.classList.toggle('on', x === b));
+  state.size = +b.dataset.v; rebuild();
+});
+document.getElementById('swatches').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  document.querySelectorAll('#swatches button').forEach(x => x.classList.toggle('on', x === b));
+  state.color = b.dataset.v; state.colorName = b.dataset.n;
+  document.getElementById('colorName').textContent = b.dataset.n; rebuild();
+});
+const txt = document.getElementById('txt'), cnt = document.getElementById('cnt');
+let tTimer;
+txt.addEventListener('input', () => {
+  cnt.textContent = `${txt.value.length}/10`;
+  clearTimeout(tTimer); tTimer = setTimeout(() => { state.text = txt.value; rebuild(); }, 350);
+});
+
+// AR
+const isWx = /MicroMessenger/i.test(navigator.userAgent);
+if (isWx) document.getElementById('wxTip').classList.add('show');
+const sheet = document.getElementById('sheet');
+document.getElementById('sheetClose').onclick = () => sheet.classList.remove('open');
+document.getElementById('arBtn').addEventListener('click', async () => {
+  if (isWx) {
+    document.getElementById('sheetTitle').textContent = '请在浏览器中打开';
+    document.getElementById('sheetText').textContent = '微信内置浏览器不支持 AR。点右上角「···」→「在浏览器打开」，再点「放到桌上看」。';
+    document.getElementById('sheetUrl').textContent = location.href;
+    sheet.classList.add('open'); return;
+  }
+  if (mv.canActivateAR) { mv.activateAR(); return; }
+  document.getElementById('sheetUrl').textContent = location.href;
+  sheet.classList.add('open');
+});
+
+// inquiry
+function toast(t) { const el = document.createElement('div'); el.className = 'toast'; el.textContent = t; document.body.appendChild(el);
+  requestAnimationFrame(() => el.classList.add('show')); setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 300); }, 1800); }
+function copy(t) {
+  if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(t).catch(() => {});
+  const a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0'; document.body.appendChild(a); a.select();
+  try { document.execCommand('copy'); } catch (e) {} a.remove(); return Promise.resolve();
+}
+const wx = document.getElementById('wxModal');
+document.getElementById('askBtn').addEventListener('click', () => {
+  const msg = `【3D 定制询价】足球狐狸 JTY-001\n尺寸：${state.size}cm\n球衣颜色：${state.colorName}\n胸前印字：${state.text || '无'}\n数量：`;
+  copy(msg); wx.classList.add('open'); toast('方案已复制');
+});
+wx.addEventListener('click', e => {
+  if (e.target === wx || e.target.closest('.wx-close')) wx.classList.remove('open');
+  const c = e.target.closest('[data-copy]'); if (c) copy(c.dataset.copy).then(() => toast('微信号已复制'));
+});
+
+customElements.whenDefined('model-viewer').then(rebuild);
+</script>
+</body>
+</html>

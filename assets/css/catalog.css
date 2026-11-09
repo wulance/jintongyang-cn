@@ -110,6 +110,9 @@ button{font-family:inherit}
 .item .q{font-size:13.5px;font-weight:600;color:var(--accent);align-self:flex-start}
 .item .q:hover{text-decoration:underline}
 .item.hide{display:none}
+.item .qs{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.item .q3d{font-size:12.5px;border:1px solid var(--ink);padding:2px 8px;white-space:nowrap}
+.item .q3d:hover{background:var(--ink);color:#fff}
 
 /* tabs (product filter) */
 .tabs{display:flex;gap:28px;border-bottom:1px solid var(--line);margin-bottom:28px;overflow-x:auto;scrollbar-width:none}
